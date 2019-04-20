@@ -1,0 +1,30 @@
+{
+    "name": "wazsmwazsm/ioc-container",
+    "description": "Dependency injection IOC Container",
+    "keywords": ["IOC", "Container"],
+    "license": "MIT",
+    "homepage": "https://github.com/wazsmwazsm/IOCContainer",
+    "authors": [
+      {
+        "name": "MrQin",
+        "email": "942443360@qq.com"
+      }
+    ],
+    "require": {
+        "php": ">=5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IOC\\": "src/IOC/"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.laravel-china.org"
+        }
+    }
+}
