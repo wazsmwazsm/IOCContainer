@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/wazsmwazsm/IOCContainer.svg?branch=master)](https://travis-ci.org/wazsmwazsm/IOCContainer)
 
+## 安装
+
+```bash
+composer require wazsmwazsm/ioc-container
+```
 ## 介绍
 
 一个简单好用的 IOC 容器。
