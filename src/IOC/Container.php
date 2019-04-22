@@ -3,6 +3,9 @@
 namespace IOC;
 
 use ReflectionClass;
+use InvalidArgumentException;
+use BadMethodCallException;
+
 /**
  * Dependency injection IOC Container.
  *
@@ -46,7 +49,7 @@ class Container
     public static function singleton($instance, $name = NULL)
     {
         if ( ! is_object($instance)) {
-            throw new \InvalidArgumentException("Object need!");
+            throw new InvalidArgumentException("Object need!");
         }
         $class_name = $name == NULL ? get_class($instance) : $name;
         // singleton not exist, create
@@ -96,9 +99,10 @@ class Container
      * get Instance from reflection info.
      *
      * @param  string  $class_name
+     * @param  array  $params 
      * @return object
      */
-    public static function getInstance($class_name)
+    public static function getInstance($class_name, $params = [])
     {
         // get class reflector
         $reflector = new ReflectionClass($class_name);
@@ -106,6 +110,7 @@ class Container
         $constructor = $reflector->getConstructor();
         // create di params
         $di_params = $constructor ? self::_getDiParams($constructor->getParameters()) : [];
+        $di_params = array_merge($di_params, $params);
         // create instance
         return $reflector->newInstanceArgs($di_params);
     }
@@ -113,15 +118,16 @@ class Container
      * get Instance, if instance is not singleton, set it to singleton.
      *
      * @param  string  $class_name
+     * @param  array  $params 
      * @return object
      */
-    public static function getInstanceWithSingleton($class_name)
+    public static function getInstanceWithSingleton($class_name, $params = [])
     {
         // is a singleton instance?
         if (NULL != ($instance = self::getSingleton($class_name))) {
             return $instance;
         }
-        $instance = self::getInstance($class_name);
+        $instance = self::getInstance($class_name, $params);
         self::singleton($instance);
         return $instance;
     }
@@ -131,21 +137,22 @@ class Container
      * @param  string $class_name
      * @param  string $method
      * @param  array  $params
+     * @param  array  $construct_params
      * @return mixed
      * @throws \BadMethodCallException
      */
-    public static function run($class_name, $method, $params = [])
+    public static function run($class_name, $method, $params = [], $construct_params = [])
     {
         // class exist ?
         if ( ! class_exists($class_name)) {
-            throw new \BadMethodCallException("Class $class_name is not found!");
+            throw new BadMethodCallException("Class $class_name is not found!");
         }
         // method exist ?
         if ( ! method_exists($class_name, $method)) {
-            throw new \BadMethodCallException("undefined method $method in $class_name !");
+            throw new BadMethodCallException("undefined method $method in $class_name !");
         }
         // create instance
-        $instance = self::getInstance($class_name);
+        $instance = self::getInstance($class_name, $construct_params);
         /******* method Dependency injection *******/
         // get class reflector
         $reflector = new ReflectionClass($class_name);

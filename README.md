@@ -61,6 +61,11 @@ var_dump($bar->a); // 6
 var_dump($bar->b); // 8
 ```
 
+如果要获取实例的构造方法有其他参数，可以通过 getInstance 方法的第二个参数传入：
+```php
+Container::getInstance(Bar::class, ['param1', 'param2']);
+```
+
 Container 还提供了获取实例单例的版本 getInstanceWithSingleton，如果要获取的实例没有设置单例，getInstanceWithSingleton 方法会将该实例设置为单例并返回该实例。
 
 
@@ -110,6 +115,11 @@ class Bar
 }
 
 $result = Container::run(Bar::class, 'f1', [4, 2]); // result is 9
+```
+
+如果要运行的实例的构造方法有其他参数，可以通过 run 方法的第四个参数传入：
+```php
+Container::run(Bar::class, 'f1', [4, 2], ['param1', 'param2']);
 ```
 
 ## 单例

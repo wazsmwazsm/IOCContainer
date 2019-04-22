@@ -76,6 +76,31 @@ class brr
     }
 }
 
+class A
+{
+    public $count = 100;
+}
+
+class B
+{
+    protected $count = 1;
+
+    public function __construct(A $a, $count)
+    {
+        $this->count = $a->count + $count;
+    }
+
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    public function getACount(A $a, $count)
+    {
+        return $a->count + $count;
+    }
+}
+
 class ContainerTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
@@ -151,6 +176,13 @@ class ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(8, $result->b);
     }
 
+    public function testGetInstanceWithParams()
+    {
+        // DI 
+        $result = ContainerFake::getInstance(B::class, [23,]);
+        $this->assertEquals(123, $result->getCount());
+    }
+
     public function testGetInstanceSingleton()
     {
         $foo = new Foo();
@@ -182,6 +214,15 @@ class ContainerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expect->f2($foo, 13, 'Jack'), $result);
     }
 
+    public function testRunWithConstructParam()
+    {
+        $a = new A();
+        $expect = new B($a, 12);
+        $result = ContainerFake::run(B::class, 'getACount', [23,], [12,]);
+        
+        $this->assertEquals($expect->getACount($a, 23, 'Jack'), $result);
+    }
+    
     /**
     * @expectedException \BadMethodCallException
     */
