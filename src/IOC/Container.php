@@ -8,8 +8,8 @@ use ReflectionClass;
  *
  * @author MirQin https://github.com/wazsmwazsm
  */
- class Container
- {
+class Container
+{
     /**
      * singleton instances.
      *
@@ -156,4 +156,4 @@ use ReflectionClass;
         // run method
         return call_user_func_array([$instance, $method], array_merge($di_params, $params));
     }
- }
+}
