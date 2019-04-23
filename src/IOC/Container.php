@@ -9,7 +9,7 @@ use BadMethodCallException;
 /**
  * Dependency injection IOC Container.
  *
- * @author MirQin https://github.com/wazsmwazsm
+ * @author MrQin https://github.com/wazsmwazsm
  */
 class Container
 {
