@@ -20,11 +20,5 @@
         "psr-4": {
             "IOC\\": "src/IOC/"
         }
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.laravel-china.org"
-        }
     }
 }
