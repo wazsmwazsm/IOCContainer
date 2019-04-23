@@ -1,5 +1,5 @@
 <?php
-namespace WorkerF\Tests;
+namespace IOC\Tests;
 
 use PHPUnit_Framework_TestCase;
 use IOC\Container;
