@@ -192,4 +192,6 @@ $handler = Container::getSingleton(Exceptions\ExceptionHandler::class);
 
 ```
 
+## License
+
 The IOCContainer is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
